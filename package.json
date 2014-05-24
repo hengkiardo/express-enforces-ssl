@@ -17,7 +17,7 @@
     "enforces",
     "enforces-ssl",
     "http",
-    "https"
+    "https",
     "redirect"
   ],
   "author": "Hengki Sihombing <hengki.sihombing@gmail.com> (http://twitter.com/hengkiardo)",
