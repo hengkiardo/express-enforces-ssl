@@ -1,26 +1,28 @@
 "use strict";
 
-var enforceHTTPS = function() {
+var enforceHTTPS = function(force_hard) {
 	return function(req, res, next) {
 
-		// First, check if directly requested via https
-		var isHttps = req.secure;
-
-		if(!isHttps) {
-			var isHttps = (req.headers['x-forwarded-proto'] == 'https');
+		if(force_hard) {
+			redirectUrl(req);
 		}
 
+		var isHttps = req.secure;
+
 		if(isHttps){
-			// Only redirect GET methods
-			if(req.method === "GET") {
-				res.redirect(301, "https://" + req.headers.host + req.originalUrl);
-			} else {
-				res.send(403, "Please use HTTPS when submitting data to this server.");
-			}
-		} else {
 			next();
+		} else {
+			redirectUrl(req);
 		}
 	}
 };
+
+var redirectUrl = function (req) {
+	if(req.method === "GET") {
+		res.redirect(301, "https://" + req.headers.host + req.originalUrl);
+	} else {
+		res.send(403, "Please use HTTPS when submitting data to this server.");
+	}
+}
 
 exports.HTTPS = enforceHTTPS;
