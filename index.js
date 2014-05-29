@@ -4,7 +4,7 @@ var enforceHTTPS = function(force_hard) {
 	return function(req, res, next) {
 
 		if(force_hard) {
-			redirectUrl(req);
+			redirectUrl(req, res);
 		}
 
 		var isHttps = req.secure;
