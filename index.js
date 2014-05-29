@@ -1,28 +1,27 @@
-"use strict";
 
-var enforceHTTPS = function(force_hard) {
-	return function(req, res, next) {
+(function(module) {
+  'use strict';
 
-		if(force_hard) {
-			redirectUrl(req, res);
+	module.exports = function enforceHTTPS() {
+
+		return function(req, res, next) {
+
+			var isHttps = req.secure;
+
+			if(isHttps){
+				next();
+			} else {
+				redirectUrl(req);
+			}
 		}
+	};
 
-		var isHttps = req.secure;
-
-		if(isHttps){
-			next();
+	var redirectUrl = function (req, res) {
+		if(req.method === "GET") {
+			res.redirect(301, "https://" + req.headers.host + req.originalUrl);
 		} else {
-			redirectUrl(req);
+			res.send(403, "Please use HTTPS when submitting data to this server.");
 		}
 	}
-};
 
-var redirectUrl = function (req, res) {
-	if(req.method === "GET") {
-		res.redirect(301, "https://" + req.headers.host + req.originalUrl);
-	} else {
-		res.send(403, "Please use HTTPS when submitting data to this server.");
-	}
-}
-
-exports.HTTPS = enforceHTTPS;
+})(module);

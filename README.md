@@ -21,12 +21,18 @@ var express_enforces_ssl = require('express-enforces-ssl');
 
 var app = express();
 
-// use HTTPS(true) in case you are behind a load balancer (e.g. Heroku)
-app.use(express_enforces_ssl.HTTPS());
+app.enable('trust proxy');
+
+app.use(express_enforces_ssl());
+
+/*
+    Routes Here
+*/
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));
 });
+
 ```
 
 LICENCE
