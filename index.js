@@ -17,7 +17,7 @@ var enforceHTTPS = function(force_hard) {
 	}
 };
 
-var redirectUrl = function (req) {
+var redirectUrl = function (req, res) {
 	if(req.method === "GET") {
 		res.redirect(301, "https://" + req.headers.host + req.originalUrl);
 	} else {
