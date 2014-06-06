@@ -1,5 +1,7 @@
+
 express-enforces-ssl
 ==============
+[![npm](https://img.shields.io/npm/v/express-enforces-ssl.svg)](https://www.npmjs.org/package/express-enforces-ssl)
 
 This simple module enforces HTTPS connections on any incoming requests. In case of a non-encrypted HTTP request, express-enforces-ssl automatically redirects to an HTTPS address using a 301 permanent redirect.
 
