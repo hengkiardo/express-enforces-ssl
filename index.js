@@ -19,6 +19,6 @@ var redirectUrl = function (req, res) {
 	if (req.method === "GET") {
 		res.redirect(301, "https://" + req.headers.host + req.originalUrl);
 	} else {
-		res.send(403, "Please use HTTPS when submitting data to this server.");
+		res.status(403).send("Please use HTTPS when submitting data to this server.");
 	}
 };
