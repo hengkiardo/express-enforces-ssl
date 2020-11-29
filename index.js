@@ -25,7 +25,7 @@ var redirectUrl = function (req, res, opts = {
 	port: "",
 }) {
 	if (req.method === "GET") {
-		res.redirect(opts.redirectStatus, `https://${req.headers.host}${opts.port}${req.originalUrl}`);
+		res.redirect(opts.redirectStatus, `https://${req.headers.host}${opts.port ? `:${opts.port}` : '' }${req.originalUrl}`);
 	} else {
 		res.status(opts.rejectStatus).send(opts.message);
 	}
