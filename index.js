@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function enforceHTTPS() {
+module.exports = function enforceHTTPS(opts) {
 
 	return function(req, res, next) {
 
@@ -9,16 +9,19 @@ module.exports = function enforceHTTPS() {
 		if (isHttps) {
 			next();
 		} else {
-			redirectUrl(req, res);
+			redirectUrl(req, res, opts);
 		}
 	};
 
 };
 
-var redirectUrl = function (req, res) {
+var redirectUrl = function (req, res, opts = {
+	message: "Please use HTTPS when submitting data to this server.",
+	port: "",
+}) {
 	if (req.method === "GET") {
-		res.redirect(301, "https://" + req.headers.host + req.originalUrl);
+		res.redirect(301, `https://${req.headers.host}${req.port}${req.originalUrl}`);
 	} else {
-		res.status(403).send("Please use HTTPS when submitting data to this server.");
+		res.status(403).send(opts.message);
 	}
 };
