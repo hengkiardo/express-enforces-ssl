@@ -24,7 +24,8 @@ var redirectUrl = function (req, res, opts = {
 	message: "Please use HTTPS when submitting data to this server.",
 }) {
 	if (req.method === "GET") {
-		res.redirect(opts.redirectStatus, `https://${req.headers.host}${opts.port ? `:${opts.port}` : '' }${req.originalUrl}`);
+		const redirectUrl = `https://${req.hostname}${opts.port ? `:${opts.port}` : '' }${req.originalUrl}`
+		res.redirect(opts.redirectStatus, redirectUrl);
 	} else {
 		res.status(opts.rejectStatus).send(opts.message);
 	}
